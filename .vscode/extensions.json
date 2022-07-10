@@ -4,6 +4,6 @@
     "firsttris.vscode-jest-runner",
     "dbaeumer.vscode-eslint",
     "prisma.prisma",
-    "kumar-harsh.graphql-for-vscode"
+    "GraphQL.vscode-graphql"
   ]
 }
