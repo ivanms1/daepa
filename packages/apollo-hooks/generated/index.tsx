@@ -134,6 +134,7 @@ export type QueryGetArticleArgs = {
 
 export type QueryGetArticlesAdminArgs = {
   cursor?: InputMaybe<Scalars['String']>;
+  input?: InputMaybe<SearchArticlesInput>;
 };
 
 
@@ -165,7 +166,8 @@ export type QuerySearchArticlesArgs = {
 
 export enum Role {
   Admin = 'ADMIN',
-  Author = 'AUTHOR'
+  Author = 'AUTHOR',
+  User = 'USER'
 }
 
 /** Search input fields */
@@ -209,12 +211,73 @@ export type User = {
   role: Role;
 };
 
+export type QueryArticlesAdminQueryVariables = Exact<{
+  input?: InputMaybe<SearchArticlesInput>;
+  cursor?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type QueryArticlesAdminQuery = { __typename?: 'Query', getArticlesAdmin: { __typename?: 'ArticlesResponse', nextCursor?: string | null, prevCursor?: string | null, results: Array<{ __typename?: 'Article', id: string, title: string, preview: string, content: string, isPublished: boolean, createdAt: any, updatedAt: any, tags: Array<string>, lead: string, author: { __typename?: 'User', id: string, name: string, email: string } }> } };
+
 export type SearchArticlesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type SearchArticlesQuery = { __typename?: 'Query', articles: { __typename?: 'ArticlesResponse', results: Array<{ __typename?: 'Article', id: string, title: string }> } };
 
 
+export const QueryArticlesAdminDocument = gql`
+    query QueryArticlesAdmin($input: SearchArticlesInput, $cursor: String) {
+  getArticlesAdmin(input: $input, cursor: $cursor) {
+    nextCursor
+    prevCursor
+    results {
+      id
+      title
+      preview
+      content
+      isPublished
+      createdAt
+      updatedAt
+      tags
+      lead
+      author {
+        id
+        name
+        email
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useQueryArticlesAdminQuery__
+ *
+ * To run a query within a React component, call `useQueryArticlesAdminQuery` and pass it any options that fit your needs.
+ * When your component renders, `useQueryArticlesAdminQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useQueryArticlesAdminQuery({
+ *   variables: {
+ *      input: // value for 'input'
+ *      cursor: // value for 'cursor'
+ *   },
+ * });
+ */
+export function useQueryArticlesAdminQuery(baseOptions?: Apollo.QueryHookOptions<QueryArticlesAdminQuery, QueryArticlesAdminQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<QueryArticlesAdminQuery, QueryArticlesAdminQueryVariables>(QueryArticlesAdminDocument, options);
+      }
+export function useQueryArticlesAdminLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<QueryArticlesAdminQuery, QueryArticlesAdminQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<QueryArticlesAdminQuery, QueryArticlesAdminQueryVariables>(QueryArticlesAdminDocument, options);
+        }
+export type QueryArticlesAdminQueryHookResult = ReturnType<typeof useQueryArticlesAdminQuery>;
+export type QueryArticlesAdminLazyQueryHookResult = ReturnType<typeof useQueryArticlesAdminLazyQuery>;
+export type QueryArticlesAdminQueryResult = Apollo.QueryResult<QueryArticlesAdminQuery, QueryArticlesAdminQueryVariables>;
 export const SearchArticlesDocument = gql`
     query SearchArticles {
   articles: getPublishedArticles {

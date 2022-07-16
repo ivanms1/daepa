@@ -14,7 +14,8 @@
     "build:hooks": "turbo run build --filter=apollo-hooks",
     "build:ui": "turbo run build --filter=ui",
     "lint": "turbo run lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "generate": "turbo run generate --filter=apollo-hooks"
   },
   "devDependencies": {
     "eslint-config-custom": "latest",

@@ -1,0 +1,22 @@
+query QueryArticlesAdmin($input: SearchArticlesInput, $cursor: String) {
+  getArticlesAdmin(input: $input, cursor: $cursor) {
+    nextCursor
+    prevCursor
+    results {
+      id
+      title
+      preview
+      content
+      isPublished
+      createdAt
+      updatedAt
+      tags
+      lead
+      author {
+        id
+        name
+        email
+      }
+    }
+  }
+}
