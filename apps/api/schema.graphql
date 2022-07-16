@@ -58,7 +58,7 @@ type Query {
   getArticle(id: ID!): Article
 
   """Admin query to get articles"""
-  getArticlesAdmin(cursor: String): ArticlesResponse!
+  getArticlesAdmin(cursor: String, input: SearchArticlesInput): ArticlesResponse!
   getCurrentUser: User
 
   """Get all my projects"""
@@ -79,6 +79,7 @@ type Query {
 enum Role {
   ADMIN
   AUTHOR
+  USER
 }
 
 """Search input fields"""
