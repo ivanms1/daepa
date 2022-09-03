@@ -5,6 +5,6 @@ interface Button extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   url?: string;
 }
 
-export const Button = ({ children }: Button) => {
-  return <button>{children}</button>;
+export const Button = ({ children, ...props }: Button) => {
+  return <button {...props}>{children}</button>;
 };

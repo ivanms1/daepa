@@ -2,15 +2,20 @@ import React, { useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 
-const PUBLIC_ROUTES = ['/'];
+const PUBLIC_ROUTES = ['/login'];
 
 interface AuthProvider {
   children: React.ReactNode;
 }
 
 function AuthProvider({ children }: AuthProvider) {
-  const { status } = useSession();
   const router = useRouter();
+  const { status } = useSession({
+    required: false,
+    onUnauthenticated: () => {
+      router.replace('/login');
+    },
+  });
 
   useEffect(() => {
     if (
@@ -24,6 +29,10 @@ function AuthProvider({ children }: AuthProvider) {
       router.replace('/');
     }
   }, [status]);
+
+  if (status === 'loading') {
+    return <div>Loading...</div>;
+  }
 
   return <>{children}</>;
 }

@@ -211,6 +211,15 @@ export type User = {
   role: Role;
 };
 
+export type SignupMutationVariables = Exact<{
+  email: Scalars['String'];
+  name: Scalars['String'];
+  avatar: Scalars['String'];
+}>;
+
+
+export type SignupMutation = { __typename?: 'Mutation', signup: any };
+
 export type QueryArticlesAdminQueryVariables = Exact<{
   input?: InputMaybe<SearchArticlesInput>;
   cursor?: InputMaybe<Scalars['String']>;
@@ -219,12 +228,50 @@ export type QueryArticlesAdminQueryVariables = Exact<{
 
 export type QueryArticlesAdminQuery = { __typename?: 'Query', getArticlesAdmin: { __typename?: 'ArticlesResponse', nextCursor?: string | null, prevCursor?: string | null, results: Array<{ __typename?: 'Article', id: string, title: string, preview: string, content: string, isPublished: boolean, createdAt: any, updatedAt: any, tags: Array<string>, lead: string, author: { __typename?: 'User', id: string, name: string, email: string } }> } };
 
+export type GetArticlesAdminQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetArticlesAdminQuery = { __typename?: 'Query', articles: { __typename?: 'ArticlesResponse', results: Array<{ __typename?: 'Article', id: string, title: string }> } };
+
 export type SearchArticlesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type SearchArticlesQuery = { __typename?: 'Query', articles: { __typename?: 'ArticlesResponse', results: Array<{ __typename?: 'Article', id: string, title: string }> } };
 
 
+export const SignupDocument = gql`
+    mutation Signup($email: String!, $name: String!, $avatar: String!) {
+  signup(email: $email, name: $name, avatar: $avatar)
+}
+    `;
+export type SignupMutationFn = Apollo.MutationFunction<SignupMutation, SignupMutationVariables>;
+
+/**
+ * __useSignupMutation__
+ *
+ * To run a mutation, you first call `useSignupMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSignupMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [signupMutation, { data, loading, error }] = useSignupMutation({
+ *   variables: {
+ *      email: // value for 'email'
+ *      name: // value for 'name'
+ *      avatar: // value for 'avatar'
+ *   },
+ * });
+ */
+export function useSignupMutation(baseOptions?: Apollo.MutationHookOptions<SignupMutation, SignupMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SignupMutation, SignupMutationVariables>(SignupDocument, options);
+      }
+export type SignupMutationHookResult = ReturnType<typeof useSignupMutation>;
+export type SignupMutationResult = Apollo.MutationResult<SignupMutation>;
+export type SignupMutationOptions = Apollo.BaseMutationOptions<SignupMutation, SignupMutationVariables>;
 export const QueryArticlesAdminDocument = gql`
     query QueryArticlesAdmin($input: SearchArticlesInput, $cursor: String) {
   getArticlesAdmin(input: $input, cursor: $cursor) {
@@ -278,6 +325,43 @@ export function useQueryArticlesAdminLazyQuery(baseOptions?: Apollo.LazyQueryHoo
 export type QueryArticlesAdminQueryHookResult = ReturnType<typeof useQueryArticlesAdminQuery>;
 export type QueryArticlesAdminLazyQueryHookResult = ReturnType<typeof useQueryArticlesAdminLazyQuery>;
 export type QueryArticlesAdminQueryResult = Apollo.QueryResult<QueryArticlesAdminQuery, QueryArticlesAdminQueryVariables>;
+export const GetArticlesAdminDocument = gql`
+    query GetArticlesAdmin {
+  articles: getArticlesAdmin {
+    results {
+      id
+      title
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetArticlesAdminQuery__
+ *
+ * To run a query within a React component, call `useGetArticlesAdminQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetArticlesAdminQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetArticlesAdminQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetArticlesAdminQuery(baseOptions?: Apollo.QueryHookOptions<GetArticlesAdminQuery, GetArticlesAdminQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetArticlesAdminQuery, GetArticlesAdminQueryVariables>(GetArticlesAdminDocument, options);
+      }
+export function useGetArticlesAdminLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetArticlesAdminQuery, GetArticlesAdminQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetArticlesAdminQuery, GetArticlesAdminQueryVariables>(GetArticlesAdminDocument, options);
+        }
+export type GetArticlesAdminQueryHookResult = ReturnType<typeof useGetArticlesAdminQuery>;
+export type GetArticlesAdminLazyQueryHookResult = ReturnType<typeof useGetArticlesAdminLazyQuery>;
+export type GetArticlesAdminQueryResult = Apollo.QueryResult<GetArticlesAdminQuery, GetArticlesAdminQueryVariables>;
 export const SearchArticlesDocument = gql`
     query SearchArticles {
   articles: getPublishedArticles {

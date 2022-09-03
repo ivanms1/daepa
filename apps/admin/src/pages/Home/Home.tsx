@@ -1,20 +1,14 @@
-import { useSearchArticlesQuery } from 'apollo-hooks';
-import { Button } from 'ui';
+import { signOut } from 'next-auth/react';
 
 function Home() {
-  const { data } = useSearchArticlesQuery();
-
   return (
     <div>
-      <h1>Admin</h1>
-      <div>
-        {data?.articles?.results?.map((article) => (
-          <p key={article.id}> {article.title}</p>
-        ))}
-      </div>
-      <Button>Beep</Button>
+      <h1>Home</h1>
+      <button onClick={() => signOut()}>logout</button>
     </div>
   );
 }
 
 export default Home;
+
+Home.auth = true;

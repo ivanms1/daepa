@@ -1,0 +1,8 @@
+query GetArticlesAdmin {
+  articles: getArticlesAdmin {
+    results {
+      id
+      title
+    }
+  }
+}

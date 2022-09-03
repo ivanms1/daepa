@@ -8,7 +8,8 @@
       "outputs": []
     },
     "generate": {
-      "outputs": []
+      "outputs": [],
+      "cache": false
     },
     "dev": {
       "cache": false
