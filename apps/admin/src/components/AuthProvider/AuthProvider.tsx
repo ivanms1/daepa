@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
+import Layout from '../Layout';
 
 const PUBLIC_ROUTES = ['/login'];
 
@@ -32,6 +33,10 @@ function AuthProvider({ children }: AuthProvider) {
 
   if (status === 'loading') {
     return <div>Loading...</div>;
+  }
+
+  if (status === 'authenticated') {
+    return <Layout>{children}</Layout>;
   }
 
   return <>{children}</>;

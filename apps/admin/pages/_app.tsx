@@ -6,6 +6,8 @@ import AuthProvider from 'src/components/AuthProvider';
 
 import useApollo from '@/hooks/useApollo';
 
+import './styles.css';
+
 function CustomApp({
   Component,
   pageProps: { session, ...pageProps },
